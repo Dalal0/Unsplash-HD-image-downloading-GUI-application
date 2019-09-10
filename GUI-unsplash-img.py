@@ -94,7 +94,7 @@ class Gui(Tk):
                 orientation = 'landscape'
 
             try:
-                api = f'https://api.unsplash.com/photos/search?query={image_name}&resolution={size}&orientation={orientation}&client_id=8c8b90902c54cea3f2f2cab40bdb8f20312086c3342fe83428f930c72e6e2219&page={pages}&w=1500&dpi=2'  # This is pixel size 1500, 1080,400,200
+                api = f'https://api.unsplash.com/photos/search?query={image_name}&resolution={size}&orientation={orientation}&client_id={your API key}&page={pages}&w=1500&dpi=2'  # This is pixel size 1500, 1080,400,200
                 res = requests.get(api).json()
                 if 'error' in res: print(res['error'])
                 for i in range(10):
