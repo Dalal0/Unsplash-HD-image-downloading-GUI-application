@@ -32,9 +32,9 @@
          *`<https://api.unsplash.com/photos?page=346>; rel="last",`
          *`<https://api.unsplash.com/photos?page=4>; rel="next"`
  # Full Url set up
-    (api = f'https://api.unsplash.com/photos/search?query={image_name}&resolution={size}&orientation={orientation}&client_id={Your API Key} ={pages}&w=1500&dpi=2)
+    api = f'https://api.unsplash.com/photos/search?query={image_name}&resolution={size}&orientation={orientation}&client_id={Your API Key} ={pages}&w=1500&dpi=2
     
-    `pixel size : 1500, 1080, 400, 200`
+    # pixel size : 1500, 1080, 400, 200
 
    5. Supported parameters
       * We officially support the parameters:
