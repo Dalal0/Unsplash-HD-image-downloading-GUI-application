@@ -26,24 +26,24 @@
    4. Link
       URL’s for the first, last, next, and previous pages are supplied, if applicable. They are comma-separated and differentiated with a rel attribute.
 
-      * For example, after requesting page 3 of the photo list:
-      `Link: <https://api.unsplash.com/photos?page=1>; rel="first",
-      <https://api.unsplash.com/photos?page=2>; rel="prev",
-      <https://api.unsplash.com/photos?page=346>; rel="last",
-      <https://api.unsplash.com/photos?page=4>; rel="next"`
- # Full url set up
-    `api = f'https://api.unsplash.com/photos/search?query={image_name}&resolution={size}&orientation={orientation}&client_id={Your API Key} ={pages}&w=1500&dpi=2'  # This is pixel size 1500, 1080,400,200`
+      1. For example, after requesting page 3 of the photo list:
+          **`Link: <https://api.unsplash.com/photos?page=1>; rel="first",`
+         *`<https://api.unsplash.com/photos?page=2>; rel="prev",`
+         *`<https://api.unsplash.com/photos?page=346>; rel="last",`
+         *`<https://api.unsplash.com/photos?page=4>; rel="next"`
+ # Full Url set up
+    `api = f'https://api.unsplash.com/photos/search?query={image_name}&resolution={size}&orientation={orientation}&client_id={Your API Key} ={pages}&w=1500&dpi=2'
+    `pixel size`: `1500, 1080,400,200`
 
    5. Supported parameters
       * We officially support the parameters:
-
-       `w, h:` for adjusting the width and height of a photo
-       `crop:` for applying cropping to the photo
-       `fm:` for converting image format
-       `auto=format:` for automatically choosing the optimal image format depending on user browser
-       `q:` for changing the compression quality when using lossy file formats
-       `fit:` for changing the fit of the image within the specified dimensions
-       `dpi:` for adjusting the device pixel ratio of the image
+       * `w, h:` for adjusting the width and height of a photo.
+       * `crop:` for applying cropping to the photo.
+       * `fm:` for converting image format.
+       * `auto=format:` for automatically choosing the optimal image format depending on user browser.
+       * `q:` for changing the compression quality when using lossy file formats.
+       * `fit:` for changing the fit of the image within the specified dimensions.
+       * `dpi:` for adjusting the device pixel ratio of the image.
   
 # Search by key words [Doc](https://unsplash.com/documentation#search-photos)
   1. Parameters
