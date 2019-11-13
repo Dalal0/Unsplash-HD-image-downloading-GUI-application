@@ -1,16 +1,21 @@
-from tkinter import *
-import requests
-import os, pprint
-from time import sleep
+try:
+    from tkinter import *
+    from tkinter import Tk
+except ImportError:
+    from tkinter import Tk
+
+import requests, platform
+import os
 from threading import *
 from urllib.request import urlretrieve
+
 
 
 class Gui(Tk):
     def __init__(self):
         self.do_splash_call = False
         Tk.__init__(self)
-        self.title('unsplash image download')
+        self.title('Free image download')
         self.geometry('900x500')
         # main canvas
         main = Canvas(self, bg='#0099e6')
@@ -30,7 +35,7 @@ class Gui(Tk):
         page_frame.place(relx=.5, rely=.1, relwidth=.3)
         # landing page
         Label(page_frame, text='Landing page:').pack(side=LEFT, pady=3)
-        self.page = Spinbox(page_frame, from_=1, to=50, width=30)
+        self.page = Spinbox(page_frame, from_=1, to=27, width=30)
         self.page.pack(side=RIGHT, pady=3)
 
         # frame3 for down left
@@ -54,20 +59,25 @@ class Gui(Tk):
         save_frame = Frame(main)
         save_frame.place(relx=.1, rely=.3, relwidth=.7)
         Label(save_frame, text='Save:').pack(side=LEFT, padx=5)
-        self.save = Entry(save_frame, bd=1)
-        self.save.place(relx=.1, relwidth=1)
+        self.path = Entry(save_frame, bd=1)
+        self.path.place(relx=.1, relwidth=1)
 
         # insert path for save images
-        self.save.insert(0, 'c:\\users\\abc\\Desktop\\photos')
-
-
-
-    def path(self):
-        if os.path.exists(self.save.get()):
-            os.chdir(self.save.get())
+        # Check system info
+        if platform.system()=='Linux':
+            self.path.insert(0, '/home/rohit/Desktop/img')
         else:
-            os.mkdir(self.save.get())
-            os.chdir(self.save.get())
+            self.path.insert(0, 'c:\\users\\PC-Name\\Desktop\\photos')
+
+
+
+    def check_image_path(self):
+        if os.path.exists(self.path.get()):
+            os.chdir(self.path.get())
+        else:
+            os.mkdir(self.path.get())
+            os.chdir(self.path.get())
+
     def splash(self):
         self.do_splash_call = True
         image_name = self.name.get()
@@ -94,28 +104,32 @@ class Gui(Tk):
                 orientation = 'landscape'
 
             try:
-                api = f'https://api.unsplash.com/photos/search?query={image_name}&resolution={size}&orientation={orientation}&client_id={your API key}&page={pages}&w=1500&dpi=2'  # This is pixel size 1500, 1080,400,200
+                api = f'https://api.unsplash.com/search/photos?query={image_name}&resolution={size}&client_id=71fab1070168597fcfd2bf922067b1b266a00074285460c4fa4e1967dff36384&page={pages}&w=1500&dpi=2'
                 res = requests.get(api).json()
-                if 'error' in res: print(res['error'])
-                for i in range(10):
-                    url = res[i]['links']['download']
 
-                    name_of_image = str(res[i]['alt_description'])
-                    img_name = '_'.join(name_of_image[:40].split(' '))
-                    # create folder for download images
-                    self.path()
+                if not 'errors' in res:
+                    try:
+                        for i in range(10):
+                            url = res['results'][i]['urls']['full']
+
+                            name_of_image = str(res['results'][i]['alt_description'])
+                            img_name = '_'.join(name_of_image[:40].split(' '))
 
 
-                    # print current images downloading
-                    self.output.insert(INSERT, 'Downloading Image ====>> %s.png\n' % img_name)
-                    self.output.tag_add('fine', '1.0', '1.9')
-                    self.output.tag_config('fine', background='lightGreen', foreground='#196619')
-                    # Downloading image in pc
-                    urlretrieve(url, '%s.png' % img_name)
-                    if i==9:
-                        self.output.insert(INSERT, 'We are done.')
-                        self.output.tag_add('wait', '1.0', '1.9')
-                        self.output.tag_config('wait', background='Green', foreground='black')
+                            # create folder for download images
+                            self.check_image_path()
+
+
+                            # print current images downloading
+                            self.output.insert(INSERT, 'Downloading Image %s ====>> %s.png\n' % (str(i+1),img_name))
+                            self.output.tag_add('fine', '0.0', '3.0')
+                            self.output.tag_config('fine', background='lightGreen', foreground='#196619')
+                            # Downloading image in pc
+                            urlretrieve(url, '%s.jpg' % img_name)
+                    except KeyError:
+                        self.output.insert(INSERT, 'Invalid Tree!')
+                else:
+                    self.output.insert(INSERT, 'API invalid!')
 
 
 
@@ -130,3 +144,4 @@ class Gui(Tk):
 if __name__ == '__main__':
     app = Gui()
     app.mainloop()
+
