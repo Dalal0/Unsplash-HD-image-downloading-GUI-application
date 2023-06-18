@@ -1,4 +1,4 @@
-# Unsplash-HD-image-downloading-GUI-application with multiThread
+# Unsplash-HD-image-downloading-GUI-application
 # Hey guys,
 # why you should use this cause:
   * This will save you time.
